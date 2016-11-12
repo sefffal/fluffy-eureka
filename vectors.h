@@ -27,6 +27,7 @@ typedef struct {
 } Vector3;
 
 Vector3 vadd(Vector3, Vector3);
+Vector3 vsub(Vector3, Vector3);
 Vector3 vmul(Vector3, Vector3);
 double vmag(Vector3);
 

@@ -1,0 +1,9 @@
+
+
+set terminal png
+set output 'output.png'
+
+plot 'output.dat' index 0 using 2:3 with points, \
+     'output.dat' index 1 using 2:3 with points, \
+     'output.dat' index 2 using 2:3 with points, \
+
