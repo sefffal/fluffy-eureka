@@ -32,11 +32,11 @@ int main(/*int arc, char** argv*/) {
     double maxt;
     
     initialize(particles, &dt, &maxt);
-    output_positions(particles, 1.0);
+    // output_positions(particles, 1.0);
 
     integrate(particles, dt, maxt);
 
-    output_positions(particles, maxt);
+    // output_positions(particles, maxt);
 
     return 0;
 }
@@ -44,18 +44,18 @@ int main(/*int arc, char** argv*/) {
 void initialize(Particle particles[], double* dt, double* tmax) {
 
     *dt = 0.1;
-    *tmax = 1.0;
+    *tmax = 15.0;
 
     /* Allocate particles, that's the hard bit. */
     for (int i=0; i<PARTICLE_COUNT; i++) {
         
-        particles[i].position.x = i*50.0;
-        particles[i].position.y = i*50.0;
-        particles[i].position.z = i*50.0;
+        particles[i].position.x = i*5.0;
+        particles[i].position.y = i*5.0;
+        particles[i].position.z = i*5.0;
 
-        particles[i].velocity.x = i*50.0;
-        particles[i].velocity.y = i*50.0;
-        particles[i].velocity.z = i*50.0;  
+        particles[i].velocity.x = 0.0;
+        particles[i].velocity.y = 0.0;
+        particles[i].velocity.z = 0.0;  
     }
 
     return;
@@ -65,7 +65,7 @@ void output_positions(Particle particles[], double t) {
     for (int i=0; i<PARTICLE_COUNT; i++) {
         printf("%.18g\t%.18g\t%.18g\t%.18g\n", t, particles[i].position.x, particles[i].position.y, particles[i].position.z);
     }
-    printf("\n\n");
+    // printf("\n\n");
 }
 
 void integrate(Particle particles[], double dt, double tmax) {
@@ -78,9 +78,8 @@ void integrate(Particle particles[], double dt, double tmax) {
 
     Vector3 tempPosition[PARTICLE_COUNT];
 
-    double GM = 2*M_PI;
-    double softening_constant = 1.0;
-
+    double G = 2*M_PI;
+    double softening_constant = 0.1;
 
     for (double t=0.0; t<tmax; t+=dt) {
 
@@ -89,7 +88,7 @@ void integrate(Particle particles[], double dt, double tmax) {
         memcpy(old, new, sizeof(Particle)*PARTICLE_COUNT);
         memcpy(new, particles, sizeof(Particle)*PARTICLE_COUNT);
 
-        // output_positions(old, t);
+        output_positions(old, t);
 
         /* For the half step forward, just calculate once */
         double dtover2 = dt/2;
@@ -118,12 +117,12 @@ void integrate(Particle particles[], double dt, double tmax) {
                     continue;
                 Vector3 difference = vsub(tempPosition[i], tempPosition[j]);
                 double r = vmag(difference) + softening_constant;
-                double field = -GM/pow(r, 3);
+                double field = -G/pow(r, 3);
 
-                acceleration.x += field*tempPosition[j].x;
-                acceleration.y += field*tempPosition[j].y;
-                acceleration.z += field*tempPosition[j].z;
-            }
+                acceleration.x += field*difference.x;
+                acceleration.y += field*difference.y;
+                acceleration.z += field*difference.z;
+            } /* End of inner (j) particle loop */
 
             /* Update the velocity in the new grid */
             new[i].velocity.x = old[i].velocity.x + acceleration.x * dt;          
@@ -134,8 +133,9 @@ void integrate(Particle particles[], double dt, double tmax) {
             new[i].position.x = tempPosition[i].x + new[i].velocity.x * dtover2;
             new[i].position.y = tempPosition[i].y + new[i].velocity.y * dtover2;
             new[i].position.z = tempPosition[i].z + new[i].velocity.z * dtover2;
-        }
-    }
+
+        } /* End outer (i) particle loop */
+    } /* End t+=dt time loop */
 }
 
 
