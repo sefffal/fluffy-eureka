@@ -1,0 +1,1 @@
+make && ./fluffy-eureka | grep -P '^\d' > output.tsv  && gnuplot chart.gnups.txt

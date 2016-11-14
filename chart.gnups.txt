@@ -3,17 +3,17 @@
 set terminal png
 #set output 'outputA.png'
 
-# plot 'output.dat' index 0 using 2:3 with points, \
-#      'output.dat' index 1 using 2:3 with points, \
-#      'output.dat' index 2 using 2:3 with points \
+# plot 'output.tsv' index 0 using 2:3 with points, \
+#      'output.tsv' index 1 using 2:3 with points, \
+#      'output.tsv' index 2 using 2:3 with points \
 
 # set output 'outputB.png'
 
-# plot 'output.dat' index 0 using 2:4 with points, \
-#      'output.dat' index 1 using 2:4 with points, \
-#      'output.dat' index 2 using 2:4 with points \
+# plot 'output.tsv' index 0 using 2:4 with points, \
+#      'output.tsv' index 1 using 2:4 with points, \
+#      'output.tsv' index 2 using 2:4 with points \
 
 
 set output 'outputC.png'
 
-splot 'output.dat' using 2:3:4 with dots
+splot 'output.tsv' using 2:3:4 with dots

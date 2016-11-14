@@ -1,0 +1,500 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     18788,        492]
+NotebookOptionsPosition[     18058,        462]
+NotebookOutlinePosition[     18404,        477]
+CellTagsIndexPosition[     18361,        474]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"data", " ", "=", " ", 
+   RowBox[{
+   "Import", "[", 
+    "\"\<C:\\\\Users\\\\William\\\\code\\\\PHYS313\\\\fluffy-eureka\\\\output.\
+tsv\>\"", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.687909031356472*^9, 3.68790905934367*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ParticleCount", " ", "=", " ", "100"}]], "Input",
+ CellChangeTimes->{{3.6879090812768707`*^9, 3.6879091029400306`*^9}, {
+  3.6879092317312956`*^9, 3.6879092337518663`*^9}, {3.6879101817502203`*^9, 
+  3.687910186104048*^9}}],
+
+Cell[BoxData["100"], "Output",
+ CellChangeTimes->{
+  3.687910186718895*^9, 3.687910430122346*^9, 3.687910488253326*^9, 
+   3.6879536476835947`*^9, {3.6879536835065117`*^9, 3.6879537057821083`*^9}, {
+   3.6881251503050547`*^9, 3.6881251703070393`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["data"], "Input",
+ CellChangeTimes->{{3.687953845905277*^9, 3.6879538464557724`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        TagBox[
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", "0.368804283146189626`17.56679595613418"}], ",", 
+             RowBox[{"-", "0.430113191450998689`17.633582762448356"}], ",", 
+             RowBox[{"-", "0.518797286562061588`17.714997695950583"}]}], 
+            "}"}], ",", 
+           TemplateBox[{"5098"},
+            "OutputSizeLimit`Skeleton",
+            DisplayFunction->(FrameBox[
+              RowBox[{"\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}],
+               Background -> GrayLevel[0.75], 
+              BaseStyle -> {
+               "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                ShowStringCharacters -> False}, BaselinePosition -> Baseline, 
+              ContentPadding -> False, FrameMargins -> {{1, 1}, {1, 2}}, 
+              FrameStyle -> None, RoundingRadius -> 7]& )], ",", 
+           RowBox[{"{", 
+            RowBox[{"4.99999999999999822`17.69897000433602", ",", 
+             RowBox[{"-", "0.515914772258371901`17.712577963264756"}], ",", 
+             "0.665403933535503977`17.82308536387232", ",", 
+             RowBox[{"-", "0.453714975298611489`17.656783113809155"}]}], 
+            "}"}]}], "}"}],
+         Short[#, 5]& ],
+        BaseStyle->{Deployed -> False},
+        StripOnInput->False]},
+      {GridBox[{
+         {
+          TagBox[
+           TooltipBox[
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "FEStrings", "sizeBriefExplanation"], StandardForm],
+               ImageSizeCache->{65., {3., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarCategory",
+             StripOnInput->False],
+            StyleBox[
+             DynamicBox[
+              ToBoxes[
+               FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
+               StandardForm]], DynamicUpdating -> True, StripOnInput -> 
+             False]],
+           Annotation[#, 
+            Style[
+             Dynamic[
+              FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"]], 
+             DynamicUpdating -> True], "Tooltip"]& ], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm],
+               ImageSizeCache->{52., {1., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            OutputSizeLimit`Defer, 6, 31651192587066823008, 5/2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm],
+               ImageSizeCache->{62., {1., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            OutputSizeLimit`Defer, 6, 31651192587066823008, 5 2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{44., {1., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{44., {1., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            OutputSizeLimit`Defer, 6, 31651192587066823008, Infinity],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{78., {1., 9.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEnd`SetOptions[
+              FrontEnd`$FrontEnd, 
+               FrontEnd`PreferencesSettings -> {"Page" -> "Evaluation"}], 
+              FrontEnd`FrontEndToken["PreferencesDialog"]}],
+           Evaluator->None,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        FrameStyle->GrayLevel[0.85],
+        GridBoxDividers->{"Columns" -> {False, {True}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{2}}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxDividers->{
+      "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+       "RowsIndexed" -> {}},
+     GridBoxItemSize->{
+      "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], 
+         Offset[1.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}],
+    Background->RGBColor[0.9657, 0.9753, 0.9802],
+    FrameMargins->{{12, 12}, {0, 15}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Out[6]]], "Output",
+ CellChangeTimes->{3.687953847143272*^9, 3.6879539430065556`*^9, 
+  3.688125170481543*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.687909326838163*^9, 3.6879093294081507`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"c", "=", 
+      RowBox[{"Round", "[", "a", "]"}]}], ";", 
+     RowBox[{"ListPointPlot3D", "[", 
+      RowBox[{
+       RowBox[{"data", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount"}], "+", 
+            "1"}], ";;", 
+           RowBox[{
+            RowBox[{"c", "*", "ParticleCount"}], "+", "1"}]}], ",", 
+          RowBox[{"2", ";;"}]}], "]"}], "]"}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", " ", 
+       RowBox[{"ViewPoint", "\[Rule]", "Front"}]}], "]"}]}], ")"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", " ", "2", ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Length", "[", "data", "]"}], "/", "ParticleCount"}], " ", "-",
+       "1"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6879091815851135`*^9, 3.6879091862434115`*^9}, {
+   3.6879092917466307`*^9, 3.6879092946301594`*^9}, {3.6879093409743395`*^9, 
+   3.6879093720640826`*^9}, {3.687909413376167*^9, 3.6879094531884356`*^9}, 
+   3.6879094878875475`*^9, {3.687909546689104*^9, 3.68790960974197*^9}, {
+   3.6879096548277893`*^9, 3.6879096713783007`*^9}, {3.6879097565723567`*^9, 
+   3.6879098044082136`*^9}, {3.6879098641476135`*^9, 3.687909866999278*^9}, {
+   3.6879099079474277`*^9, 3.6879100076273174`*^9}, {3.6879100657029476`*^9, 
+   3.6879100849158726`*^9}, {3.6879101348750415`*^9, 3.687910159611368*^9}, {
+   3.6879101911046147`*^9, 3.6879101947171817`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 2, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`a$$], 2, 50}}, Typeset`size$$ = Automatic, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`a$2509$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`a$$ = 2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$2509$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`c = Round[$CellContext`a$$]; ListPointPlot3D[
+         Part[$CellContext`data, 
+          
+          Span[($CellContext`c - 1) $CellContext`ParticleCount + 
+           1, $CellContext`c $CellContext`ParticleCount + 1], 
+          Span[2, All]], AspectRatio -> 1, 
+         PlotRange -> {{-2, 2}, {-2, 2}, {-2, 2}}, ViewPoint -> Front]), 
+      "Specifications" :> {{$CellContext`a$$, 2, 50}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.6879101438886786`*^9, 3.687910161556797*^9}, 
+   3.6879101952982492`*^9, 3.6879102617494206`*^9, 3.6879104382190294`*^9, {
+   3.6879104905107965`*^9, 3.6879105161415462`*^9}, 3.6879105931339917`*^9, 
+   3.687953654918414*^9, {3.687953685117355*^9, 3.687953694236117*^9}, {
+   3.6879539454481244`*^9, 3.6879539694726*^9}, {3.6881251661133895`*^9, 
+   3.688125173938046*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"c", "=", 
+      RowBox[{"Round", "[", "a", "]"}]}], ";", 
+     RowBox[{"ListPointPlot3D", "[", 
+      RowBox[{
+       RowBox[{"data", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount"}], "+", 
+            "1"}], ";;", 
+           RowBox[{
+            RowBox[{"c", "*", "ParticleCount"}], "+", "1"}]}], ",", 
+          RowBox[{"2", ";;"}]}], "]"}], "]"}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", " ", 
+       RowBox[{"ViewPoint", "\[Rule]", "Front"}]}], "]"}]}], ")"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", " ", "2", ",", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Length", "[", "data", "]"}], "/", "ParticleCount"}], " ", "-",
+       "1"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.687910204574283*^9, 3.6879102058214436`*^9}, {
+  3.687910495223468*^9, 3.687910497125255*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 2, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`a$$], 2, 50}}, Typeset`size$$ = Automatic, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`a$2322$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`a$$ = 2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`a$$, $CellContext`a$2322$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`c = Round[$CellContext`a$$]; ListPointPlot3D[
+         Part[$CellContext`data, 
+          
+          Span[($CellContext`c - 1) $CellContext`ParticleCount + 
+           1, $CellContext`c $CellContext`ParticleCount + 1], 
+          Span[2, All]], AspectRatio -> 1, 
+         PlotRange -> {{-2, 2}, {-2, 2}, {-2, 2}}, ViewPoint -> Front]), 
+      "Specifications" :> {{$CellContext`a$$, 2, 50, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.6879102066004*^9, 3.6879105212513866`*^9, 
+  3.688125170557864*^9}]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{87, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 269, 7, 30, "Input"],
+Cell[CellGroupData[{
+Cell[852, 31, 247, 4, 30, "Input"],
+Cell[1102, 37, 251, 4, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1390, 46, 98, 1, 30, "Input"],
+Cell[1491, 49, 8450, 214, 133, "Output"]
+}, Open  ]],
+Cell[9956, 266, 94, 1, 30, "Input"],
+Cell[CellGroupData[{
+Cell[10075, 271, 2043, 49, 107, "Input"],
+Cell[12121, 322, 2183, 43, 75, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14341, 370, 1492, 42, 107, "Input"],
+Cell[15836, 414, 2206, 45, 42, "Output"]
+}, Open  ]]
+}
+]
+*)
+
