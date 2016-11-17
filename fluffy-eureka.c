@@ -7,7 +7,9 @@
 #include "vectors.h"
 
 #define GRID_SIZE 100
-#define PARTICLE_COUNT 100
+#define PARTICLE_COUNT 500
+#define PARTICLE_MASS 1.0
+#define RADIUS 1.0
 
 /* Define an alias, Grid3, for a 3D array of fixed size. */
 typedef double Grid3[GRID_SIZE][GRID_SIZE][GRID_SIZE];
@@ -43,9 +45,22 @@ int main(/*int arc, char** argv*/) {
 }
 
 void initialize(Particle particles[], double* dt, double* tmax) {
+    double G = 2*M_PI;
 
-    *dt = 0.1;
-    *tmax = 5.0;
+    double t_charac = RADIUS/sqrt(G*PARTICLE_MASS*PARTICLE_COUNT/RADIUS);
+    *dt = 0.01 * t_charac;
+    fprintf(stderr, "dt: %lf\n", *dt);
+    *tmax = t_charac*10;
+    fprintf(stderr, "tmax: %lf\n", *tmax);
+    
+
+    // Vector3 unitx = {.x=1, .y=0, .z=0};
+    // Vector3 unitx = {.x=0, .y=1, .z=0};
+    // Vector3 unitx = {.x=0, .y=0, .z=1};
+
+
+    // Naive density calculation, assuming smooth distribution
+    double density = PARTICLE_COUNT*PARTICLE_MASS/((4.0/3.0)*M_PI*pow(RADIUS, 3));
 
     // srand((unsigned)time(NULL));
     srand(100);
@@ -53,61 +68,88 @@ void initialize(Particle particles[], double* dt, double* tmax) {
     /* Distribute particles uniformly in a unit sphere */
     int i;
     i=0;
-    while (i<PARTICLE_COUNT) {
+    while (i<=PARTICLE_COUNT) {
         
         particles[i].position.x = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
         particles[i].position.y = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
         particles[i].position.z = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
 
         /* Reject particles outside of a unit sphere */
-        if (vmag(particles[i].position) <= 1) {
+        if (vmag(particles[i].position) < RADIUS && vmag(particles[i].position) > RADIUS*0.01) {
             i++;
         }
     }
 
     /* Give each particle an oribital velocity */
-    // i=0;
-    // while (i<PARTICLE_COUNT) {
+    i=0;
+    while (i<PARTICLE_COUNT) {
         
-    //     double r = vmag(particles[i].position);
-     
-    //     /* Pick a random angle between 0 and 2*pi */
-    //     double angle = 2.0*M_PI*(double)rand()/(double)RAND_MAX;
+        double rmag = vmag(particles[i].position);
+        double Mr = (4.0/3.0) * M_PI * pow(rmag, 3) * density;
 
-    //     // TODO
-    //     double vmag = sqrt(1/r)*3;
+        Vector3 r = particles[i].position;        
 
-    //     /* Distribute the velocity in the plane
-    //      * orthogonal to the normal using the angle.
-    //      */
-    //     // TODO
-    //     particles[i].velocity.x = angle*vmag;
-    //     particles[i].velocity.y = angle*vmag;
-    //     particles[i].velocity.z = angle*vmag;
+        /* Rotate into a primed coordinate system where
+         * the r vector is along the z' axis.
+         * `angle` is then the angle about the z'-axis,
+         * which we project into y and x components using
+         * the sines and cosines of the angle.
+         * Finally, we rotate back into the unprimed
+         * coordinate system.
+         */
+        double speed = sqrt(G*Mr/rmag);
 
-    //     i+=1;
-    // }
+        /* Pick a random angle between 0 and 2*pi */
+        double angle = 2.0*M_PI*(double)rand()/(double)RAND_MAX;
+
+        double phi = -atan2(r.y, r.x);
+        double theta = -acos(r.z/rmag);
+
+        Vector3 alpha = {
+            .x = cos(phi)*cos(theta),
+            .y = -cos(theta)*sin(phi),
+            .z = sin(theta)
+        };
+
+        Vector3 beta = {
+            .x = sin(phi),
+            .y = cos(phi),
+            .z = 0
+        };
+
+        // Vector3 gamma = {
+        //     .x = -sin(theta)*cos(phi),
+        //     .y = sin(theta)*sin(phi),
+        //     .z = cos(theta)
+        // };
+
+        Vector3 vprime = {
+            .x = cos(angle)*speed,
+            .y = sin(angle)*speed,
+            .z = 0.0
+        };
+
         
+        particles[i].velocity = vadd(smulv(vprime.x, alpha), smulv(vprime.y, beta));
 
-    // /* Allocate particles, that's the hard bit. */
-    // for (int i=0; i<PARTICLE_COUNT; i++) {
-
-        
-    //     particles[i].position.x = i*5.0;
-    //     particles[i].position.y = i*5.0;
-    //     particles[i].position.z = i*5.0;
-
-    //     particles[i].velocity.x = 0.0;
-    //     particles[i].velocity.y = 0.0;
-    //     particles[i].velocity.z = 0.0;  
-    // }
+        i+=1;
+    }
 
     return;
 }
 
 void output_positions(Particle particles[], double t) {
     for (int i=0; i<PARTICLE_COUNT; i++) {
-        printf("%.18g\t%.18g\t%.18g\t%.18g\n", t, particles[i].position.x, particles[i].position.y, particles[i].position.z);
+        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\n",
+             t,
+             particles[i].position.x,
+             particles[i].position.y,
+             particles[i].position.z,
+             particles[i].velocity.x,
+             particles[i].velocity.y,
+             particles[i].velocity.z,
+             vdot(particles[i].position, particles[i].velocity)
+            );
     }
     // printf("\n\n");
 }
@@ -123,7 +165,8 @@ void integrate(Particle particles[], double dt, double tmax) {
     Vector3 tempPosition[PARTICLE_COUNT];
 
     double G = 2*M_PI;
-    double softening_constant = 0.5 * pow(PARTICLE_COUNT, 1.0/3.0); /* Ave particle spacing, prop. to Radius * N^1/3 */
+    double softening_constant = 0.1*RADIUS * pow(PARTICLE_COUNT, -1.0/3.0); /* Ave particle spacing, prop. to Radius * N^1/3 */
+    fprintf(stderr, "Softening: %lf\n", softening_constant);
 
     for (double t=0.0; t<tmax; t+=dt) {
 
@@ -161,7 +204,7 @@ void integrate(Particle particles[], double dt, double tmax) {
                     continue;
                 Vector3 difference = vsub(tempPosition[i], tempPosition[j]);
                 double r = vmag(difference) + softening_constant;
-                double field = -G/pow(r, 3);
+                double field = -G * pow(PARTICLE_MASS, 2) /pow(r, 3);
 
                 acceleration.x += field*difference.x;
                 acceleration.y += field*difference.y;
