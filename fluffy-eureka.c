@@ -7,7 +7,7 @@
 #include "vectors.h"
 
 #define GRID_SIZE 100
-#define PARTICLE_COUNT 500
+#define PARTICLE_COUNT 2000
 #define PARTICLE_MASS 1.0
 #define RADIUS 1.0
 
@@ -45,27 +45,27 @@ int main(/*int arc, char** argv*/) {
 }
 
 void initialize(Particle particles[], double* dt, double* tmax) {
+    
     double G = 2*M_PI;
+    double fraction_to_flip = 1.0;
 
+    // Calculate the characteristic time scale of the system -- use to find dt and tmax
     double t_charac = RADIUS/sqrt(G*PARTICLE_MASS*PARTICLE_COUNT/RADIUS);
     *dt = 0.01 * t_charac;
-    fprintf(stderr, "dt: %lf\n", *dt);
-    *tmax = t_charac*10;
-    fprintf(stderr, "tmax: %lf\n", *tmax);
-    
+    *tmax = t_charac*30;//100;
 
-    // Vector3 unitx = {.x=1, .y=0, .z=0};
-    // Vector3 unitx = {.x=0, .y=1, .z=0};
-    // Vector3 unitx = {.x=0, .y=0, .z=1};
+    fprintf(stderr, "dt: %lf\n", *dt);    
+    fprintf(stderr, "tmax: %lf\n", *tmax);
+    fprintf(stderr, "fraction_to_flip: %lf\n", fraction_to_flip);    
 
 
     // Naive density calculation, assuming smooth distribution
-    double density = PARTICLE_COUNT*PARTICLE_MASS/((4.0/3.0)*M_PI*pow(RADIUS, 3));
+    // double density = PARTICLE_COUNT*PARTICLE_MASS/((4.0/3.0)*M_PI*pow(RADIUS, 3));
 
     // srand((unsigned)time(NULL));
     srand(100);
 
-    /* Distribute particles uniformly in a unit sphere */
+    /* Distribute particles uniformly in a unit sphere */ 
     int i;
     i=0;
     while (i<=PARTICLE_COUNT) {
@@ -85,7 +85,15 @@ void initialize(Particle particles[], double* dt, double* tmax) {
     while (i<PARTICLE_COUNT) {
         
         double rmag = vmag(particles[i].position);
-        double Mr = (4.0/3.0) * M_PI * pow(rmag, 3) * density;
+        // double Mr = (4.0/3.0) * M_PI * pow(rmag, 3) * density;
+
+        /* Calculate the mass within this sphere of this radius */
+        double Mr = 0.0;
+        for (int j=0; j<PARTICLE_COUNT; j++) {
+            if (vmag(particles[j].position) <= rmag) {
+                Mr += PARTICLE_MASS;
+            }
+        }
 
         Vector3 r = particles[i].position;        
 
@@ -132,6 +140,15 @@ void initialize(Particle particles[], double* dt, double* tmax) {
         
         particles[i].velocity = vadd(smulv(vprime.x, alpha), smulv(vprime.y, beta));
 
+        // Check if angular momentum is negative
+        if (vcross(r, particles[i].velocity).z <0) {
+            // Flip some percentage of orbits from retrograde to prograde
+            if ((double)rand()/(double)RAND_MAX < fraction_to_flip) {
+                particles[i].velocity.x *= -1;
+                particles[i].velocity.y *= -1;
+            }
+        }
+
         i+=1;
     }
 
@@ -140,15 +157,14 @@ void initialize(Particle particles[], double* dt, double* tmax) {
 
 void output_positions(Particle particles[], double t) {
     for (int i=0; i<PARTICLE_COUNT; i++) {
-        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\n",
+        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\n",
              t,
              particles[i].position.x,
              particles[i].position.y,
              particles[i].position.z,
              particles[i].velocity.x,
              particles[i].velocity.y,
-             particles[i].velocity.z,
-             vdot(particles[i].position, particles[i].velocity)
+             particles[i].velocity.z
             );
     }
     // printf("\n\n");
@@ -165,18 +181,21 @@ void integrate(Particle particles[], double dt, double tmax) {
     Vector3 tempPosition[PARTICLE_COUNT];
 
     double G = 2*M_PI;
-    double softening_constant = 0.1*RADIUS * pow(PARTICLE_COUNT, -1.0/3.0); /* Ave particle spacing, prop. to Radius * N^1/3 */
+    double softening_constant = 0.02*RADIUS * pow(PARTICLE_COUNT, -1.0/3.0); /* Ave particle spacing, prop. to Radius * N^1/3 */
     fprintf(stderr, "Softening: %lf\n", softening_constant);
 
-    for (double t=0.0; t<tmax; t+=dt) {
+    int i=0;
+    for (double t=0.0; t<tmax; t+=dt, i++) {
 
         /* Flip old and new temp grids */
         memcpy(particles, old, sizeof(Particle)*PARTICLE_COUNT);
         memcpy(old, new, sizeof(Particle)*PARTICLE_COUNT);
         memcpy(new, particles, sizeof(Particle)*PARTICLE_COUNT);
-
-        output_positions(old, t);
-
+    
+        if (i%25==0) {
+            output_positions(old, t);
+            fprintf(stderr, "%2.2f%% complete\n", t/tmax*100);
+        }
         /* For the half step forward, just calculate once */
         double dtover2 = dt/2;
         

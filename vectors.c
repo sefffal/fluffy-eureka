@@ -82,7 +82,7 @@ Vector3 vcross(Vector3 a, Vector3 b) {
     out.x = a.y*b.z - a.z*b.y;
     out.y = - a.x*b.z + a.z*b.x;
     out.z = a.x*b.y - a.y*b.x;
-    assert(out.x == a.y*b.z - a.z*b.x && out.y == a.z*b.x - a.x*b.z && out.z == a.x*b.y - a.y*b.x);    
+    assert(out.x == a.y*b.z - a.z*b.y && out.y == a.z*b.x - a.x*b.z && out.z == a.x*b.y - a.y*b.x);    
     return out;
 }
 

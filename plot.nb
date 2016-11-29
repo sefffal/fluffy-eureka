@@ -10,49 +10,53 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      8779,        220]
-NotebookOptionsPosition[      8314,        199]
-NotebookOutlinePosition[      8661,        214]
-CellTagsIndexPosition[      8618,        211]
+NotebookDataLength[     10395,        247]
+NotebookOptionsPosition[      9925,        227]
+NotebookOutlinePosition[     10273,        242]
+CellTagsIndexPosition[     10230,        239]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+Cell["\[LineSeparator]All prograde", "Text",
+ CellChangeTimes->{{3.6883898383792453`*^9, 3.6883898401700954`*^9}, 
+   3.689423476792351*^9}],
+
 Cell[BoxData[
  RowBox[{
-  RowBox[{"data", " ", "=", " ", 
+  RowBox[{"data4", " ", "=", " ", 
    RowBox[{
    "Import", "[", 
     "\"\<C:\\\\Users\\\\William\\\\code\\\\PHYS313\\\\fluffy-eureka\\\\\
-output3.tsv\>\"", "]"}]}], ";"}]], "Input",
+output6.tsv\>\"", "]"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.687909031356472*^9, 3.68790905934367*^9}, 
-   3.688388826416315*^9}],
-
-Cell[CellGroupData[{
+   3.688388826416315*^9, {3.6883898431309814`*^9, 3.68838984558757*^9}, {
+   3.6894243904318576`*^9, 3.6894243905318584`*^9}, {3.6894247860205126`*^9, 
+   3.6894247906610394`*^9}, 3.689425499735174*^9, {3.6894272905042076`*^9, 
+   3.6894272909240675`*^9}, {3.689427890177605*^9, 3.689427890319605*^9}, {
+   3.6894298686801076`*^9, 3.689429868843914*^9}}],
 
 Cell[BoxData[
- RowBox[{"ParticleCount", " ", "=", " ", "500"}]], "Input",
- CellChangeTimes->{{3.6879090812768707`*^9, 3.6879091029400306`*^9}, {
-   3.6879092317312956`*^9, 3.6879092337518663`*^9}, {3.6879101817502203`*^9, 
-   3.687910186104048*^9}, 3.6882278146669664`*^9, 3.6882399483679657`*^9, {
-   3.688315541008938*^9, 3.6883155421314507`*^9}, {3.688388685805744*^9, 
-   3.688388685890746*^9}}],
-
-Cell[BoxData["500"], "Output",
+ RowBox[{
+  RowBox[{"data5", " ", "=", " ", 
+   RowBox[{
+   "Import", "[", 
+    "\"\<C:\\\\Users\\\\William\\\\code\\\\PHYS313\\\\fluffy-eureka\\\\\
+output7.tsv\>\"", "]"}]}], ";"}]], "Input",
  CellChangeTimes->{
-  3.687910186718895*^9, 3.687910430122346*^9, 3.687910488253326*^9, 
-   3.6879536476835947`*^9, {3.6879536835065117`*^9, 3.6879537057821083`*^9}, {
-   3.6881251503050547`*^9, 3.6881251703070393`*^9}, 3.688221504966835*^9, 
-   3.688221550142172*^9, 3.6882222415793543`*^9, 3.688222292901539*^9, 
-   3.6882225140055137`*^9, 3.688227440323397*^9, 3.6882275262628756`*^9, 
-   3.6882276218706427`*^9, 3.688227818304011*^9, 3.6882331255399284`*^9, 
-   3.6882331825532756`*^9, 3.6882351573941317`*^9, 3.688235195968315*^9, 
-   3.688239974018916*^9, 3.6883146059104023`*^9, 3.688315553607812*^9, 
-   3.6883374378677907`*^9, 3.68833759894487*^9, 3.68833791282071*^9, 
-   3.688337985324534*^9, 3.688338101907221*^9, 3.6883381883177075`*^9, 
-   3.6883860156031075`*^9, 3.6883882877247524`*^9, 3.6883886863232565`*^9, 
-   3.688388896346422*^9}]
-}, Open  ]],
+  3.6894255043511815`*^9, {3.6894272956298885`*^9, 3.68942729597641*^9}, 
+   3.689427353685381*^9, {3.6894278943461747`*^9, 3.6894278944748554`*^9}, {
+   3.68942987220045*^9, 3.6894298724436646`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ParticleCount1", " ", "=", " ", "1000"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ParticleCount2", " ", "=", " ", "2000"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6883906936994257`*^9, 3.688390699416654*^9}, {
+  3.689427377543446*^9, 3.689427382660858*^9}, {3.6894298902427273`*^9, 
+  3.689429895740229*^9}}],
 
 Cell[CellGroupData[{
 
@@ -63,24 +67,24 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"c", "=", 
       RowBox[{"Round", "[", "a", "]"}]}], ";", "\[IndentingNewLine]", 
-     RowBox[{"b", "=", "1.6"}], ";", "\[IndentingNewLine]", 
-     RowBox[{
-      RowBox[{"ListPointPlot3D", "[", 
+     RowBox[{"b", "=", "8"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"ListPointPlot3D", "[", "\[IndentingNewLine]", 
        RowBox[{
-        RowBox[{"data", "[", 
+        RowBox[{"data4", "[", 
          RowBox[{"[", 
           RowBox[{
            RowBox[{
             RowBox[{
              RowBox[{
               RowBox[{"(", 
-               RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount"}], "+", 
+               RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount1"}], "+", 
              "1"}], ";;", 
             RowBox[{
-             RowBox[{"c", "*", "ParticleCount"}], "+", "1"}]}], ",", 
+             RowBox[{"c", "*", "ParticleCount1"}], "+", "1"}]}], ",", 
            RowBox[{"2", ";;", "4"}]}], "]"}], "]"}], ",", 
         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
-        RowBox[{"ViewPoint", "\[Rule]", "Front"}], ",", " ", 
+        RowBox[{"ViewPoint", "\[Rule]", "Top"}], ",", " ", 
         RowBox[{"PlotRange", "\[Rule]", 
          RowBox[{"{", 
           RowBox[{
@@ -92,43 +96,50 @@ Cell[BoxData[
              RowBox[{"-", "b"}], ",", "b"}], "}"}], ",", 
            RowBox[{"{", 
             RowBox[{
-             RowBox[{"-", "b"}], ",", "b"}], "}"}]}], "}"}]}]}], "]"}], 
-      "\[IndentingNewLine]", 
-      RowBox[{"ListPointPlot3D", "[", 
-       RowBox[{
-        RowBox[{"data", "[", 
-         RowBox[{"[", 
+             RowBox[{"-", "b"}], ",", "b"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"PlotStyle", "\[Rule]", "Blue"}], ",", " ", 
+        RowBox[{"PlotTheme", "\[Rule]", "\"\<Scientific\>\""}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]", 
+       "]"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"ListPointPlot3D", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"data5", "[", 
+        RowBox[{"[", 
+         RowBox[{
           RowBox[{
            RowBox[{
             RowBox[{
-             RowBox[{
-              RowBox[{"(", 
-               RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount"}], "+", 
-             "1"}], ";;", 
-            RowBox[{
-             RowBox[{"c", "*", "ParticleCount"}], "+", "1"}]}], ",", 
-           RowBox[{"2", ";;", "4"}]}], "]"}], "]"}], ",", 
-        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
-        RowBox[{"ViewPoint", "\[Rule]", "Left"}], ",", " ", 
-        RowBox[{"PlotRange", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "b"}], ",", "b"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "b"}], ",", "b"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "b"}], ",", "b"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
-    ")"}], ",", " ", 
+             RowBox[{"(", 
+              RowBox[{"c", "-", "1"}], ")"}], "*", "ParticleCount2"}], "+", 
+            "1"}], ";;", 
+           RowBox[{
+            RowBox[{"c", "*", "ParticleCount2"}], "+", "1"}]}], ",", 
+          RowBox[{"2", ";;", "4"}]}], "]"}], "]"}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"ViewPoint", "\[Rule]", "Top"}], ",", " ", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "b"}], ",", "b"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "b"}], ",", "b"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "b"}], ",", "b"}], "}"}]}], "}"}]}], ",", " ", 
+       RowBox[{"PlotTheme", "\[Rule]", "\"\<Scientific\>\""}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]", 
+      "]"}]}], ")"}], ",", " ", 
    RowBox[{"{", 
     RowBox[{"a", ",", " ", "1", ",", " ", 
      RowBox[{
       RowBox[{
-       RowBox[{"Length", "[", "data", "]"}], "/", "ParticleCount"}], " ", "-",
-       "1"}]}], "}"}]}], "]"}]], "Input",
+       RowBox[{"Length", "[", "data5", "]"}], "/", "ParticleCount2"}], " ", 
+      "-", "1"}]}], "}"}]}], "]"}]], "Input",
  CellChangeTimes->{{3.6879091815851135`*^9, 3.6879091862434115`*^9}, {
    3.6879092917466307`*^9, 3.6879092946301594`*^9}, {3.6879093409743395`*^9, 
    3.6879093720640826`*^9}, {3.687909413376167*^9, 3.6879094531884356`*^9}, 
@@ -143,47 +154,57 @@ Cell[BoxData[
    3.6882346108145857`*^9, 3.6882346896668262`*^9}, {3.6883146775749097`*^9, 
    3.688314677736412*^9}, {3.688379774469426*^9, 3.688379786225425*^9}, {
    3.688386751008023*^9, 3.688386751529521*^9}, {3.68838892832797*^9, 
-   3.6883889710230627`*^9}}],
+   3.6883889710230627`*^9}, {3.6883898544119115`*^9, 
+   3.6883898565717916`*^9}, {3.68838992355894*^9, 3.688389924197443*^9}, 
+   3.688390131718419*^9, {3.6883901766164074`*^9, 3.688390224638855*^9}, 
+   3.688479675707895*^9, {3.689423555987688*^9, 3.68942358066438*^9}, {
+   3.6894236122159715`*^9, 3.6894236471884704`*^9}, {3.689423756162391*^9, 
+   3.689423763429474*^9}, {3.689424801521782*^9, 3.6894248899954824`*^9}, {
+   3.689426023556493*^9, 3.6894260438772182`*^9}, {3.689426093421384*^9, 
+   3.689426098763526*^9}, {3.6894273866219*^9, 3.689427412827052*^9}, {
+   3.689428034040298*^9, 3.689428034311208*^9}, {3.689429997483302*^9, 
+   3.689430001286474*^9}}],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
-   DynamicModuleBox[{$CellContext`a$$ = 65.65038957194878, Typeset`show$$ = 
+   DynamicModuleBox[{$CellContext`a$$ = 36.19105534273462, Typeset`show$$ = 
     True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
     "\"untitled\"", Typeset`specs$$ = {{
-      Hold[$CellContext`a$$], 1, 
-      Rational[499499, 500]}}, Typeset`size$$ = {521., {136., 142.}}, 
-    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
-    True, $CellContext`a$26466$$ = 0}, 
+      Hold[$CellContext`a$$], 1, 120}}, Typeset`size$$ = {
+    1155., {285., 290.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`a$157064$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, "Variables" :> {$CellContext`a$$ = 1}, 
       "ControllerVariables" :> {
-        Hold[$CellContext`a$$, $CellContext`a$26466$$, 0]}, 
+        Hold[$CellContext`a$$, $CellContext`a$157064$$, 0]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
         Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
          Typeset`skipInitDone$$}, 
-      "Body" :> ($CellContext`c = Round[$CellContext`a$$]; $CellContext`b = 
-        1.6; ListPointPlot3D[
-          Part[$CellContext`data, 
+      "Body" :> ($CellContext`c = Round[$CellContext`a$$]; $CellContext`b = 8; 
+       ListPointPlot3D[
+          Part[$CellContext`data4, 
            
-           Span[($CellContext`c - 1) $CellContext`ParticleCount + 
-            1, $CellContext`c $CellContext`ParticleCount + 1], 
-           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Front, 
+           Span[($CellContext`c - 1) $CellContext`ParticleCount1 + 
+            1, $CellContext`c $CellContext`ParticleCount1 + 1], 
+           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Top, 
           PlotRange -> {{-$CellContext`b, $CellContext`b}, {-$CellContext`b, \
-$CellContext`b}, {-$CellContext`b, $CellContext`b}}] ListPointPlot3D[
-          Part[$CellContext`data, 
+$CellContext`b}, {-$CellContext`b, $CellContext`b}}, PlotStyle -> Blue, 
+          PlotTheme -> "Scientific", ImageSize -> Large] ListPointPlot3D[
+          Part[$CellContext`data5, 
            
-           Span[($CellContext`c - 1) $CellContext`ParticleCount + 
-            1, $CellContext`c $CellContext`ParticleCount + 1], 
-           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Left, 
+           Span[($CellContext`c - 1) $CellContext`ParticleCount2 + 
+            1, $CellContext`c $CellContext`ParticleCount2 + 1], 
+           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Top, 
           PlotRange -> {{-$CellContext`b, $CellContext`b}, {-$CellContext`b, \
-$CellContext`b}, {-$CellContext`b, $CellContext`b}}]), 
-      "Specifications" :> {{$CellContext`a$$, 1, 
-         Rational[499499, 500]}}, "Options" :> {}, "DefaultOptions" :> {}],
-     ImageSizeCache->{572., {195., 202.}},
+$CellContext`b}, {-$CellContext`b, $CellContext`b}}, PlotTheme -> 
+          "Scientific", ImageSize -> Large]), 
+      "Specifications" :> {{$CellContext`a$$, 1, 120}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{1206., {344., 351.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -194,11 +215,18 @@ $CellContext`b}, {-$CellContext`b, $CellContext`b}}]),
    Deployed->True,
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
- CellChangeTimes->{3.688388973346178*^9}]
+ CellChangeTimes->{
+  3.689423501793071*^9, 3.6894236165324717`*^9, 3.6894236934019628`*^9, 
+   3.689423764142138*^9, {3.689424848948318*^9, 3.689424890494341*^9}, 
+   3.6894256209418817`*^9, 3.6894259623013916`*^9, {3.68942602786938*^9, 
+   3.689426044380268*^9}, {3.6894260959811144`*^9, 3.6894260993243923`*^9}, 
+   3.689426381417534*^9, 3.689426631840503*^9, 3.68942726609526*^9, 
+   3.6894273090221324`*^9, 3.6894274160499997`*^9, 3.689427909338853*^9, 
+   3.6894280350383654`*^9, 3.6894299034332275`*^9}]
 }, Open  ]]
 },
-WindowSize->{1424, 877},
-WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+WindowSize->{1440, 877},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
 FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -213,14 +241,13 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 296, 8, 30, "Input"],
+Cell[558, 20, 140, 2, 49, "Text"],
+Cell[701, 24, 626, 12, 30, "Input"],
+Cell[1330, 38, 427, 10, 30, "Input"],
+Cell[1760, 50, 360, 8, 50, "Input"],
 Cell[CellGroupData[{
-Cell[879, 32, 399, 6, 30, "Input"],
-Cell[1281, 40, 883, 13, 30, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2201, 58, 3641, 87, 126, "Input"],
-Cell[5845, 147, 2453, 49, 414, "Output"]
+Cell[2145, 62, 4746, 103, 221, "Input"],
+Cell[6894, 167, 3015, 57, 712, "Output"]
 }, Open  ]]
 }
 ]
