@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     10395,        247]
-NotebookOptionsPosition[      9925,        227]
-NotebookOutlinePosition[     10273,        242]
-CellTagsIndexPosition[     10230,        239]
+NotebookDataLength[     10144,        241]
+NotebookOptionsPosition[      9673,        221]
+NotebookOutlinePosition[     10020,        236]
+CellTagsIndexPosition[      9977,        233]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -133,13 +133,13 @@ Cell[BoxData[
        RowBox[{"PlotTheme", "\[Rule]", "\"\<Scientific\>\""}], ",", 
        "\[IndentingNewLine]", 
        RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]", 
-      "]"}]}], ")"}], ",", " ", 
+      "]"}]}], "\[IndentingNewLine]", ")"}], ",", " ", 
    RowBox[{"{", 
     RowBox[{"a", ",", " ", "1", ",", " ", 
      RowBox[{
       RowBox[{
        RowBox[{"Length", "[", "data5", "]"}], "/", "ParticleCount2"}], " ", 
-      "-", "1"}]}], "}"}]}], "]"}]], "Input",
+      "-", "1"}]}], "}"}]}], "\[IndentingNewLine]", "]"}]], "Input",
  CellChangeTimes->{{3.6879091815851135`*^9, 3.6879091862434115`*^9}, {
    3.6879092917466307`*^9, 3.6879092946301594`*^9}, {3.6879093409743395`*^9, 
    3.6879093720640826`*^9}, {3.687909413376167*^9, 3.6879094531884356`*^9}, 
@@ -163,22 +163,23 @@ Cell[BoxData[
    3.689426023556493*^9, 3.6894260438772182`*^9}, {3.689426093421384*^9, 
    3.689426098763526*^9}, {3.6894273866219*^9, 3.689427412827052*^9}, {
    3.689428034040298*^9, 3.689428034311208*^9}, {3.689429997483302*^9, 
-   3.689430001286474*^9}}],
+   3.689430001286474*^9}, {3.6894612225659485`*^9, 3.6894612262425594`*^9}}],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
-   DynamicModuleBox[{$CellContext`a$$ = 36.19105534273462, Typeset`show$$ = 
-    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+   DynamicModuleBox[{$CellContext`a$$ = 0.97998, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
     "\"untitled\"", Typeset`specs$$ = {{
-      Hold[$CellContext`a$$], 1, 120}}, Typeset`size$$ = {
-    1155., {285., 290.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
-    Typeset`skipInitDone$$ = True, $CellContext`a$157064$$ = 0}, 
+      Hold[$CellContext`a$$], 1, 
+      Rational[-1, 1000]}}, Typeset`size$$ = {1058., {37965., 12.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`a$4212$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, "Variables" :> {$CellContext`a$$ = 1}, 
       "ControllerVariables" :> {
-        Hold[$CellContext`a$$, $CellContext`a$157064$$, 0]}, 
+        Hold[$CellContext`a$$, $CellContext`a$4212$$, 0]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -186,25 +187,17 @@ Cell[BoxData[
          Typeset`skipInitDone$$}, 
       "Body" :> ($CellContext`c = Round[$CellContext`a$$]; $CellContext`b = 8; 
        ListPointPlot3D[
-          Part[$CellContext`data4, 
-           
-           Span[($CellContext`c - 1) $CellContext`ParticleCount1 + 
-            1, $CellContext`c $CellContext`ParticleCount1 + 1], 
-           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Top, 
-          PlotRange -> {{-$CellContext`b, $CellContext`b}, {-$CellContext`b, \
-$CellContext`b}, {-$CellContext`b, $CellContext`b}}, PlotStyle -> Blue, 
-          PlotTheme -> "Scientific", ImageSize -> Large] ListPointPlot3D[
-          Part[$CellContext`data5, 
-           
-           Span[($CellContext`c - 1) $CellContext`ParticleCount2 + 
-            1, $CellContext`c $CellContext`ParticleCount2 + 1], 
-           Span[2, 4]], AspectRatio -> 1, ViewPoint -> Top, 
-          PlotRange -> {{-$CellContext`b, $CellContext`b}, {-$CellContext`b, \
+         Part[$CellContext`data5, 
+          
+          Span[($CellContext`c - 1) $CellContext`ParticleCount2 + 
+           1, $CellContext`c $CellContext`ParticleCount2 + 1], 
+          Span[2, 4]], AspectRatio -> 1, ViewPoint -> Top, 
+         PlotRange -> {{-$CellContext`b, $CellContext`b}, {-$CellContext`b, \
 $CellContext`b}, {-$CellContext`b, $CellContext`b}}, PlotTheme -> 
-          "Scientific", ImageSize -> Large]), 
-      "Specifications" :> {{$CellContext`a$$, 1, 120}}, "Options" :> {}, 
-      "DefaultOptions" :> {}],
-     ImageSizeCache->{1206., {344., 351.}},
+         "Scientific", ImageSize -> Large]), 
+      "Specifications" :> {{$CellContext`a$$, 1, 
+         Rational[-1, 1000]}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{1109., {16386., 16394.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -222,11 +215,12 @@ $CellContext`b}, {-$CellContext`b, $CellContext`b}}, PlotTheme ->
    3.689426044380268*^9}, {3.6894260959811144`*^9, 3.6894260993243923`*^9}, 
    3.689426381417534*^9, 3.689426631840503*^9, 3.68942726609526*^9, 
    3.6894273090221324`*^9, 3.6894274160499997`*^9, 3.689427909338853*^9, 
-   3.6894280350383654`*^9, 3.6894299034332275`*^9}]
+   3.6894280350383654`*^9, 3.6894299034332275`*^9, 3.689460961467595*^9, 
+   3.689461054418454*^9, 3.6894611583287334`*^9, 3.6894613312002516`*^9}]
 }, Open  ]]
 },
-WindowSize->{1440, 877},
-WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+WindowSize->{1424, 877},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
 FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -246,8 +240,8 @@ Cell[701, 24, 626, 12, 30, "Input"],
 Cell[1330, 38, 427, 10, 30, "Input"],
 Cell[1760, 50, 360, 8, 50, "Input"],
 Cell[CellGroupData[{
-Cell[2145, 62, 4746, 103, 221, "Input"],
-Cell[6894, 167, 3015, 57, 712, "Output"]
+Cell[2145, 62, 4842, 103, 259, "Input"],
+Cell[6990, 167, 2667, 51, 32797, "Output"]
 }, Open  ]]
 }
 ]

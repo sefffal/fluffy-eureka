@@ -1,1 +1,1 @@
-make && ./fluffy-eureka > output7.tsv # && gnuplot chart.gnups.txt
+make && ./fluffy-eureka > output-500-inbetween.tsv

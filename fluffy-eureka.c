@@ -5,9 +5,11 @@
 #include <string.h>
 
 #include "vectors.h"
+//#include "fftw-3.3.5/fftw3.h"
+
 
 #define GRID_SIZE 100
-#define PARTICLE_COUNT 2000
+#define PARTICLE_COUNT 500
 #define PARTICLE_MASS 1.0
 #define RADIUS 1.0
 
@@ -20,59 +22,57 @@ typedef struct {
     Vector3 velocity;
 } Particle;
 
-/* Define an alias, ParticleArray, for a fixed array of particles. */
-/* typedef Particle ParticleArray[PARTICLE_COUNT]; */
-
-void initialize(Particle[], double*, double*);
-void integrate(Particle[], double, double);
+void initialize(Particle[], double*, double*, double*);
+void integrate(Particle[], double, double, double);
 void output_positions(Particle[], double);
+void calculate_bariness(Particle[]);
+void shift_all_by(Particle[], Vector3);
+Vector3 center_of_mass(Particle[]);
 
 int main(/*int arc, char** argv*/) {
 
     Particle particles[PARTICLE_COUNT]; 
     double dt;
     double maxt;
-    
-    initialize(particles, &dt, &maxt);
-    // output_positions(particles, 1.0);
-    // return 0;
+    double grid_space;
 
-    integrate(particles, dt, maxt);
+    initialize(particles, &dt, &maxt, &grid_space);
+    integrate(particles, dt, maxt, grid_space);
 
-    // output_positions(particles, maxt);
+    calculate_bariness(particles);
+
+    shift_all_by(particles, smulv(-1, center_of_mass(particles)));
+    output_positions(particles, maxt);
 
     return 0;
 }
 
-void initialize(Particle particles[], double* dt, double* tmax) {
+void initialize(Particle particles[], double* dt, double* tmax, double* grid_space) {
     
     double G = 2*M_PI;
-    double fraction_to_flip = 1.0;
+    double fraction_to_flip = 0.5;
 
-    // Calculate the characteristic time scale of the system -- use to find dt and tmax
+    /* Calculate the characteristic time scale of the system -- use to find dt and tmax */
     double t_charac = RADIUS/sqrt(G*PARTICLE_MASS*PARTICLE_COUNT/RADIUS);
     *dt = 0.01 * t_charac;
     *tmax = t_charac*30;//100;
+    *grid_space = RADIUS*8/GRID_SIZE;
 
     fprintf(stderr, "dt: %lf\n", *dt);    
     fprintf(stderr, "tmax: %lf\n", *tmax);
     fprintf(stderr, "fraction_to_flip: %lf\n", fraction_to_flip);    
 
-
-    // Naive density calculation, assuming smooth distribution
-    // double density = PARTICLE_COUNT*PARTICLE_MASS/((4.0/3.0)*M_PI*pow(RADIUS, 3));
-
-    // srand((unsigned)time(NULL));
-    srand(100);
+    srand((unsigned)time(NULL));
+    // srand(100);
 
     /* Distribute particles uniformly in a unit sphere */ 
     int i;
     i=0;
     while (i<=PARTICLE_COUNT) {
         
-        particles[i].position.x = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
-        particles[i].position.y = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
-        particles[i].position.z = (2.0*(double)rand()/(double)RAND_MAX)-1.0;
+        particles[i].position.x = (2.0*RADIUS*(double)rand()/(double)RAND_MAX)-RADIUS;
+        particles[i].position.y = (2.0*RADIUS*(double)rand()/(double)RAND_MAX)-RADIUS;
+        particles[i].position.z = (2.0*RADIUS*(double)rand()/(double)RAND_MAX)-RADIUS;
 
         /* Reject particles outside of a unit sphere */
         if (vmag(particles[i].position) < RADIUS && vmag(particles[i].position) > RADIUS*0.01) {
@@ -142,7 +142,7 @@ void initialize(Particle particles[], double* dt, double* tmax) {
 
         // Check if angular momentum is negative
         if (vcross(r, particles[i].velocity).z <0) {
-            // Flip some percentage of orbits from retrograde to prograde
+            // Flip some fraction of orbits from retrograde to prograde
             if ((double)rand()/(double)RAND_MAX < fraction_to_flip) {
                 particles[i].velocity.x *= -1;
                 particles[i].velocity.y *= -1;
@@ -151,6 +151,29 @@ void initialize(Particle particles[], double* dt, double* tmax) {
 
         i+=1;
     }
+
+
+    /* Set the total translational momentum to zero so that it stays put. */
+    Vector3 net_velocity = {.x=0.0, .y=0.0, .z=0.0};
+    for (i=0; i<PARTICLE_COUNT; i++) {
+        net_velocity = vadd(net_velocity, particles[i].velocity);
+    }
+    Vector3 ave_velocity = smulv(1/PARTICLE_COUNT, net_velocity);
+    fprintf(stderr, "Initial ave. velocity: %lf %lf %lf\n", ave_velocity.x, ave_velocity.y, ave_velocity.z);
+    for (i=0; i<PARTICLE_COUNT; i++) {
+         particles[i].velocity = vsub(particles[i].velocity, ave_velocity);
+    }
+
+    Vector3 cent = center_of_mass(particles);
+    fprintf(stderr, "initial center of mass: %lf %lf %lf\n", cent.x, cent.y, cent.z);
+    
+    /* Shift the origin so that everything is positive.
+     * This will make it easier to match up the grid.
+     * A shift of 8 times the radius will put everything firmly positive.
+     * The grid can then range from 0 to 16 times the radius.
+     */
+    Vector3 shift = {.x=8*RADIUS,.y=8*RADIUS,.z=8*RADIUS};
+    shift_all_by(particles, shift);
 
     return;
 }
@@ -167,10 +190,10 @@ void output_positions(Particle particles[], double t) {
              particles[i].velocity.z
             );
     }
-    // printf("\n\n");
+    printf("\n\n");
 }
 
-void integrate(Particle particles[], double dt, double tmax) {
+void integrate(Particle particles[], double dt, double tmax, double grid_space) {
 
     Particle old[PARTICLE_COUNT];
     Particle new[PARTICLE_COUNT];
@@ -209,31 +232,36 @@ void integrate(Particle particles[], double dt, double tmax) {
         /* Calculate the acceleration of each particle for each other particle,
          * using the temporary positions calculated earlier.
          */
+        
+        
+        Vector3 accelerations[PARTICLE_COUNT];
+        /* Zero out initial accelerations */
         for (int i=0; i<PARTICLE_COUNT; i++) {
+            accelerations[i].x = 0.0;
+            accelerations[i].y = 0.0;
+            accelerations[i].z = 0.0;
+        }
 
-            Vector3 acceleration;
-            acceleration.x = 0.0;
-            acceleration.y = 0.0;
-            acceleration.z = 0.0;
-
-            /* Go through each other particle to add the forces */
-            for (int j=0; j<PARTICLE_COUNT; j++) {
-                /* Don't add self-forces */
-                if (i==j)
-                    continue;
+        /* Go through each combination of particles to add the forces */
+        for (int i=0; i<PARTICLE_COUNT; i++) {
+            for (int j=i+1; j<PARTICLE_COUNT; j++) {
                 Vector3 difference = vsub(tempPosition[i], tempPosition[j]);
                 double r = vmag(difference) + softening_constant;
                 double field = -G * pow(PARTICLE_MASS, 2) /pow(r, 3);
 
-                acceleration.x += field*difference.x;
-                acceleration.y += field*difference.y;
-                acceleration.z += field*difference.z;
+                accelerations[i].x += field*difference.x;
+                accelerations[i].y += field*difference.y;
+                accelerations[i].z += field*difference.z;
+                accelerations[j] = vadd(accelerations[j], smulv(-1, accelerations[i]));
             } /* End of inner (j) particle loop */
+        }
 
+        /* Now that we have all the accelerations, advance one timestep */
+        for (int i=0; i<PARTICLE_COUNT; i++) {
             /* Update the velocity in the new grid */
-            new[i].velocity.x = old[i].velocity.x + acceleration.x * dt;          
-            new[i].velocity.y = old[i].velocity.y + acceleration.y * dt;          
-            new[i].velocity.z = old[i].velocity.z + acceleration.z * dt;
+            new[i].velocity.x = old[i].velocity.x + accelerations[i].x * dt;          
+            new[i].velocity.y = old[i].velocity.y + accelerations[i].y * dt;          
+            new[i].velocity.z = old[i].velocity.z + accelerations[i].z * dt;
 
             /* Update position in the new grid */
             new[i].position.x = tempPosition[i].x + new[i].velocity.x * dtover2;
@@ -244,4 +272,99 @@ void integrate(Particle particles[], double dt, double tmax) {
     } /* End t+=dt time loop */
 }
 
+// void calculate_potential(Particle particles[], Grid3 potential, double grid_space, double G) {
+//     double c = 4*M_PI*G;
+//     Grid3 density;
+//     int i;
+//     int j;
+//     int k;
 
+
+//     // Zero out density grid
+//     for (i=0; i<GRID_SIZE; i++) {
+//         for (j=0; j<GRID_SIZE; j++) {
+//             for (k=0; k<GRID_SIZE; k++) {
+//                 density[i][j][k] = 0;
+//             }
+//         }
+//     }
+
+//     // Distribute mass to grid points using nearest grid point method
+
+//     for (i=0; i<PARTICLE_COUNT; i++) {
+//         Vector3 scaled = smulv(1/grid_space, particles[i].position);
+//         // there are eight grid points it could be close to
+//         double dist1 = vmag(vsub(scaled, ))
+//         particles[i].position
+//     }
+
+//     for (i=0; i<GRID_SIZE; i++) {
+//         for (j=0; j<GRID_SIZE; j++) {
+//             for (k=0; k<GRID_SIZE; k++) {
+                
+//                 if 
+                
+//                 density[i][j][k] = 0;
+//             }
+//         }
+//     }
+
+
+//     // Calculate potential at each grid point using direct summation
+    
+//     //
+// }
+
+
+void calculate_bariness(Particle particles[]) {
+
+    double inertia_tensor[3][3] = {
+        {0,0,0},
+        {0,0,0},
+        {0,0,0}
+    };
+
+    /* Shift the galaxy center back to the origin for this calculation */
+    Vector3 shift = smulv(-1, center_of_mass(particles));
+    shift_all_by(particles, shift);
+
+    for (int i=0; i<PARTICLE_COUNT; i++) {
+        inertia_tensor[0][0] += particles[i].position.x*particles[i].position.x;
+        inertia_tensor[0][1] += particles[i].position.x*particles[i].position.y;
+        inertia_tensor[0][2] += particles[i].position.x*particles[i].position.z;
+
+        inertia_tensor[1][0] += particles[i].position.y*particles[i].position.x;
+        inertia_tensor[1][1] += particles[i].position.y*particles[i].position.y;
+        inertia_tensor[1][2] += particles[i].position.y*particles[i].position.z;
+
+        inertia_tensor[2][0] += particles[i].position.z*particles[i].position.x;
+        inertia_tensor[2][1] += particles[i].position.z*particles[i].position.y;
+        inertia_tensor[2][2] += particles[i].position.z*particles[i].position.z;
+    }
+
+    fprintf(stderr, "{{%lf,%lf,%lf},\n", inertia_tensor[0][0], inertia_tensor[0][1], inertia_tensor[0][2]);
+    fprintf(stderr, " {%lf,%lf,%lf},\n", inertia_tensor[1][0], inertia_tensor[1][1], inertia_tensor[1][2]);
+    fprintf(stderr, " {%lf,%lf,%lf}}\n", inertia_tensor[2][0], inertia_tensor[2][1], inertia_tensor[2][2]);
+
+    /* Shift the galaxy center back to where it was */
+    shift_all_by(particles, smulv(-1, shift));
+}
+
+
+
+
+void shift_all_by(Particle particles[], Vector3 shift) {
+    for (int i=0; i<PARTICLE_COUNT; i++) {
+        particles[i].position = vadd(particles[i].position, shift);
+    }
+    fprintf(stderr, "Shift all by: %lf %lf %lf\n", shift.x, shift.y, shift.z);    
+}
+
+
+Vector3 center_of_mass(Particle particles[]) {
+    Vector3 position;
+    for (int i=0; i<PARTICLE_COUNT; i++) {
+        position = vadd(particles[i].position, position);
+    }
+    return smulv(1.0/PARTICLE_COUNT, position);
+}
