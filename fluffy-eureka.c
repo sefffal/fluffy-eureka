@@ -9,7 +9,7 @@
 
 
 #define GRID_SIZE 100
-#define PARTICLE_COUNT 500
+#define PARTICLE_COUNT 1000
 #define PARTICLE_MASS 1.0
 #define RADIUS 1.0
 
@@ -22,21 +22,21 @@ typedef struct {
     Vector3 velocity;
 } Particle;
 
-void initialize(Particle[], double*, double*, double*);
+void initialize(Particle[], double*, double*, double*, int, char**);
 void integrate(Particle[], double, double, double);
 void output_positions(Particle[], double);
 void calculate_bariness(Particle[]);
 void shift_all_by(Particle[], Vector3);
 Vector3 center_of_mass(Particle[]);
 
-int main(/*int arc, char** argv*/) {
+int main(int argc, char** argv) {
 
     Particle particles[PARTICLE_COUNT]; 
     double dt;
     double maxt;
     double grid_space;
 
-    initialize(particles, &dt, &maxt, &grid_space);
+    initialize(particles, &dt, &maxt, &grid_space, argc, argv);
     integrate(particles, dt, maxt, grid_space);
 
     calculate_bariness(particles);
@@ -47,10 +47,20 @@ int main(/*int arc, char** argv*/) {
     return 0;
 }
 
-void initialize(Particle particles[], double* dt, double* tmax, double* grid_space) {
+void initialize(Particle particles[], double* dt, double* tmax, double* grid_space, int argc, char** argv) {
+
+    // Check if we got all required arguments.
+    // We need at least four, but the 0th element is the name of the program.
+    if (argc < 1) {
+        // If we didn't receive enough, print error message to STDERR and exit with error.
+        fprintf(stderr, "Error: Please provide arguments for fraction_to_flip\n");
+        exit(1);
+    }
+
     
     double G = 2*M_PI;
-    double fraction_to_flip = 0.5;
+    // Parse the command line arguments and use them as our initial conditions.
+    double fraction_to_flip = atof(argv[1]);
 
     /* Calculate the characteristic time scale of the system -- use to find dt and tmax */
     double t_charac = RADIUS/sqrt(G*PARTICLE_MASS*PARTICLE_COUNT/RADIUS);
