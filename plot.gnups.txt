@@ -1,0 +1,30 @@
+
+set terminal png
+
+system("rm output/*")
+
+#set key off
+set xlabel "X"
+set ylabel "Y"
+set zlabel "Z"
+set xrange [4:12]
+set yrange [4:12]
+set zrange [4:12]
+set size square
+
+inpfile = "output-500-1.0.tsv"
+numparticles = 500
+iterations = system("wc -l ".inpfile) / numparticles
+
+do for [ii=1:iterations] {
+    outfile = sprintf('output/%00d.png',ii)
+    set output outfile
+    set title "".ii
+    set pm3d map
+    set isosample 400
+    set palette defined (-1 "white", 0 "blue", 1 "red")
+    splot inpfile index ii using 2:3:4 with dots
+    #plot inpfile index ii using 2:3 with dots
+}
+
+system("avconv -y -framerate 12 -f image2 -i output/%d.png -c:v h264 -crf 1 output-500-1.0.mov")
