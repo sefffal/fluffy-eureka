@@ -207,15 +207,22 @@ void initialize(Particle particles[], double* dt, double* tmax, double* grid_spa
 }
 
 void output_positions(Particle particles[], double t) {
+    double inertia_tensor[3][3] = calculate_bariness(particles);
     for (int i=0; i<PARTICLE_COUNT; i++) {
-        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\n",
+        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g",
              t,
              particles[i].position.x,
              particles[i].position.y,
              particles[i].position.z,
-             particles[i].velocity.x,
-             particles[i].velocity.y,
-             particles[i].velocity.z
+             inertia_tensor[0][0],
+             inertia_tensor[0][1],
+             inertia_tensor[0][2],
+             inertia_tensor[1][0],
+             inertia_tensor[1][1],
+             inertia_tensor[1][2],
+             inertia_tensor[2][0],
+             inertia_tensor[2][1],
+             inertia_tensor[2][2],
             );
     }
     printf("\n\n");
@@ -344,7 +351,7 @@ void integrate(Particle particles[], double dt, double tmax, double grid_space) 
 // }
 
 
-void calculate_bariness(Particle particles[]) {
+double[3][3] calculate_bariness(Particle particles[], ) {
 
     double inertia_tensor[3][3] = {
         {0,0,0},
@@ -370,12 +377,14 @@ void calculate_bariness(Particle particles[]) {
         inertia_tensor[2][2] += particles[i].position.z*particles[i].position.z;
     }
 
-    fprintf(stderr, "{{%lf,%lf,%lf},\n", inertia_tensor[0][0], inertia_tensor[0][1], inertia_tensor[0][2]);
-    fprintf(stderr, " {%lf,%lf,%lf},\n", inertia_tensor[1][0], inertia_tensor[1][1], inertia_tensor[1][2]);
-    fprintf(stderr, " {%lf,%lf,%lf}}\n", inertia_tensor[2][0], inertia_tensor[2][1], inertia_tensor[2][2]);
+    // fprintf(stderr, "{{%lf,%lf,%lf},\n", inertia_tensor[0][0], inertia_tensor[0][1], inertia_tensor[0][2]);
+    // fprintf(stderr, " {%lf,%lf,%lf},\n", inertia_tensor[1][0], inertia_tensor[1][1], inertia_tensor[1][2]);
+    // fprintf(stderr, " {%lf,%lf,%lf}}\n", inertia_tensor[2][0], inertia_tensor[2][1], inertia_tensor[2][2]);
 
     /* Shift the galaxy center back to where it was */
     shift_all_by(particles, smulv(-1, shift));
+
+    return inertia_tensor;
 }
 
 
