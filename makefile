@@ -4,7 +4,7 @@
 TARGET = fluffy-eureka
 LIBS = -lm
 CC = gcc
-CFLAGS = -g -std=gnu11 -Wall -Wextra -Wpedantic -O3 # Let's make GCC very strict.
+CFLAGS = -g -rdynamic -std=gnu11 -Wall -Wextra -Wpedantic -O3 -ftree-slp-vectorize -ftree-vectorizer-verbose=2 # Let's make GCC very strict.
 #CFLAGS = -std=c99 
 
 .PHONY: default all clean

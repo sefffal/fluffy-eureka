@@ -41,7 +41,7 @@ typedef struct {
 void initialize(Particle[], double*, double*, double*, int, char**);
 void integrate(Particle[], double, double, double);
 void output_positions(Particle[], double);
-void calculate_bariness(Particle[]);
+void calculate_bariness(Particle[], double[3][3]);
 void shift_all_by(Particle[], Vector3);
 Vector3 center_of_mass(Particle[]);
 
@@ -55,8 +55,6 @@ int main(int argc, char** argv) {
 
     initialize(particles, &dt, &maxt, &grid_space, argc, argv);
     integrate(particles, dt, maxt, grid_space);
-
-    calculate_bariness(particles);
 
     shift_all_by(particles, smulv(-1, center_of_mass(particles)));
     output_positions(particles, maxt);
@@ -207,9 +205,10 @@ void initialize(Particle particles[], double* dt, double* tmax, double* grid_spa
 }
 
 void output_positions(Particle particles[], double t) {
-    double inertia_tensor[3][3] = calculate_bariness(particles);
+    double inertia_tensor[3][3] = {{0,0,0},{0,0,0},{0,0,0}};
+    calculate_bariness(particles, inertia_tensor);
     for (int i=0; i<PARTICLE_COUNT; i++) {
-        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g",
+        printf("%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\t%.18g\n",
              t,
              particles[i].position.x,
              particles[i].position.y,
@@ -222,7 +221,7 @@ void output_positions(Particle particles[], double t) {
              inertia_tensor[1][2],
              inertia_tensor[2][0],
              inertia_tensor[2][1],
-             inertia_tensor[2][2],
+             inertia_tensor[2][2]
             );
     }
     printf("\n\n");
@@ -351,13 +350,7 @@ void integrate(Particle particles[], double dt, double tmax, double grid_space) 
 // }
 
 
-double[3][3] calculate_bariness(Particle particles[], ) {
-
-    double inertia_tensor[3][3] = {
-        {0,0,0},
-        {0,0,0},
-        {0,0,0}
-    };
+void calculate_bariness(Particle particles[], double inertia_tensor[3][3]) {
 
     /* Shift the galaxy center back to the origin for this calculation */
     Vector3 shift = smulv(-1, center_of_mass(particles));
@@ -384,7 +377,6 @@ double[3][3] calculate_bariness(Particle particles[], ) {
     /* Shift the galaxy center back to where it was */
     shift_all_by(particles, smulv(-1, shift));
 
-    return inertia_tensor;
 }
 
 
