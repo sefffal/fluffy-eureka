@@ -2,14 +2,30 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
+#include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "vectors.h"
 //#include "fftw-3.3.5/fftw3.h"
+#include <execinfo.h>
+#include <signal.h>
 
+void handler(int sig) {
+  void *array[10];
+  size_t size;
+
+  // get void*'s for all entries on the stack
+  size = backtrace(array, 10);
+
+  // print out all the frames to stderr
+  fprintf(stderr, "Error: signal %d:\n", sig);
+  backtrace_symbols_fd(array, size, STDERR_FILENO);
+  exit(1);
+}
 
 #define GRID_SIZE 100
-#define PARTICLE_COUNT 1000
+#define PARTICLE_COUNT 3000
 #define PARTICLE_MASS 1.0
 #define RADIUS 1.0
 
@@ -30,6 +46,7 @@ void shift_all_by(Particle[], Vector3);
 Vector3 center_of_mass(Particle[]);
 
 int main(int argc, char** argv) {
+    signal(SIGSEGV, handler);   // install our handler
 
     Particle particles[PARTICLE_COUNT]; 
     double dt;
@@ -64,15 +81,16 @@ void initialize(Particle particles[], double* dt, double* tmax, double* grid_spa
 
     /* Calculate the characteristic time scale of the system -- use to find dt and tmax */
     double t_charac = RADIUS/sqrt(G*PARTICLE_MASS*PARTICLE_COUNT/RADIUS);
-    *dt = 0.01 * t_charac;
-    *tmax = t_charac*30;//100;
+    *dt = 0.007 * t_charac;
+    *tmax = t_charac*60;
     *grid_space = RADIUS*8/GRID_SIZE;
 
     fprintf(stderr, "dt: %lf\n", *dt);    
     fprintf(stderr, "tmax: %lf\n", *tmax);
     fprintf(stderr, "fraction_to_flip: %lf\n", fraction_to_flip);    
 
-    srand((unsigned)time(NULL));
+    srand( (unsigned) time(NULL) * getpid());
+    // srand((unsigned)time(NULL));
     // srand(100);
 
     /* Distribute particles uniformly in a unit sphere */ 
